@@ -13,45 +13,89 @@ import static io.restassured.RestAssured.given;
 
 public class DataHelper {
     private DataHelper() {
-
     }
 
-    public static class Registration {
-        private Registration() {
-        }
+    public static RequestSpecification requestSpec = new RequestSpecBuilder()
+            .setBaseUri("http://localhost")
+            .setPort(9999)
+            .setAccept(ContentType.JSON)
+            .setContentType(ContentType.JSON)
+            .log(LogDetail.ALL)
+            .build();
 
 
-        public static RequestSpecification requestSpec = new RequestSpecBuilder()
-                .setBaseUri("http://localhost")
-                .setPort(9999)
-                .setAccept(ContentType.JSON)
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
-
-
-        public static RegistrationDto registerValidUser(String locale) {
-            Faker faker = new Faker((new Locale("ru")));
-            val validUser = new RegistrationDto(
-                    faker.name().username(),
-                    faker.internet().password(),
-                    "active"
-            );
-            Registration.setUp(validUser);
-            return validUser;
-
-        }
-
-        public static void setUp(RegistrationDto registeredDto) {
-            given() // "дано"
-                    .spec(requestSpec) // указываем, какую спецификацию используем
-                    .body(registeredDto) // передаём в теле объект, который будет преобразован в JSON
-                    .when() // "когда"
-                    .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
-                    .then() // "тогда ожидаем"
-                    .statusCode(200); // код 200 OK
-
-
-        }
+    public static RegistrationDto registerValidUser(String locale) {
+        Faker faker = new Faker((new Locale("ru")));
+        val validUser = new RegistrationDto(
+                faker.name().username(),
+                faker.internet().password(),
+                "active"
+        );
+        DataHelper.setUp(validUser);
+        return validUser;
     }
+
+    public static RegistrationDto registerBlockedUser(String locale) {
+        Faker faker = new Faker((new Locale("ru")));
+        val validUser = new RegistrationDto(
+                faker.name().username(),
+                faker.internet().password(),
+                "blocked"
+        );
+        DataHelper.setUp(validUser);
+        return validUser;
+    }
+
+    public static RegistrationDto registerWrongLoginUser(String locale) {
+        Faker faker = new Faker((new Locale("ru")));
+        val validUser = new RegistrationDto(
+                faker.name().username(),
+                "password",
+                "active"
+        );
+        val invalidUser = new RegistrationDto(
+                faker.name().username(),
+                "password",
+                "active"
+        );
+        DataHelper.setUp(validUser);
+        return invalidUser;
+    }
+
+    public static RegistrationDto registerWrongPasswordUser(String locale) {
+        Faker faker = new Faker((new Locale("ru")));
+        val validUser = new RegistrationDto(
+                "Анна.Белоусова",
+                faker.internet().password(),
+                "active"
+        );
+        val invalidUser = new RegistrationDto(
+                "Анна.Белоусова",
+                faker.internet().password(),
+                "active"
+        );
+        DataHelper.setUp(validUser);
+        return invalidUser;
+    }
+
+    public static RegistrationDto registerNotExistUser(String locale) {
+        Faker faker = new Faker((new Locale("ru")));
+        val validUser = new RegistrationDto(
+                faker.name().username(),
+                faker.internet().password(),
+                "active"
+        );
+        return validUser;
+    }
+
+    public static void setUp(RegistrationDto registeredDto) {
+        given() // "дано"
+                .spec(requestSpec) // указываем, какую спецификацию используем
+                .body(registeredDto) // передаём в теле объект, который будет преобразован в JSON
+                .when() // "когда"
+                .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
+                .then() // "тогда ожидаем"
+                .statusCode(200); // код 200 OK
+    }
+
 }
