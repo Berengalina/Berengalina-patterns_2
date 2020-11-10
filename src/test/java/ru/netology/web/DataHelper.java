@@ -30,8 +30,8 @@ public class DataHelper {
                 .build();
 
 
-        public static RegistrationDto registerValidUser() {
-            Faker faker = new Faker();
+        public static RegistrationDto registerValidUser(String locale) {
+            Faker faker = new Faker((new Locale("ru")));
             val validUser = new RegistrationDto(
                     faker.name().username(),
                     faker.internet().password(),
