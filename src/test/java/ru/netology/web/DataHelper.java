@@ -30,7 +30,7 @@ public class DataHelper {
                 .build();
 
 
-        public static RegistrationDto registerUser() {
+        public static RegistrationDto registerValidUser() {
             Faker faker = new Faker();
             val validUser = new RegistrationDto(
                     faker.name().username(),
