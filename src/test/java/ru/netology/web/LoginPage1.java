@@ -19,8 +19,8 @@ public class LoginPage1 {
     @Test
     void shouldLogin(){
         open("http://localhost:9999");
-        $("[data-test-id=login] .input__control").setValue(DataHelper.Registration.generateData("ru").getLogin());
-        $("[data-test-id=password] .input__control").setValue(DataHelper.Registration.generateData("ru").getPassword());
+        $("[data-test-id=login] .input__control").setValue(DataHelper.Registration.registerUser().getLogin());
+        $("[data-test-id=password] .input__control").setValue(DataHelper.Registration.registerUser().getPassword());
         $("[data-test-id=action-login] .button__text").click();
         $("h2").shouldHave(text("Личный кабинет")).shouldBe(visible);
     }
