@@ -1,13 +1,14 @@
-package ru.netology.web;
+package ru.netology.web.test;
 
 import lombok.val;
 import org.junit.jupiter.api.Test;
+import ru.netology.web.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 
-public class LoginPage1 {
+public class LoginPage {
 
     @Test
     void shouldLogin(){

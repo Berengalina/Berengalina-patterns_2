@@ -1,4 +1,4 @@
-package ru.netology.web;
+package ru.netology.web.data;
 
 import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
@@ -31,7 +31,7 @@ public class DataHelper {
                 faker.internet().password(),
                 "active"
         );
-        DataHelper.setUp(validUser);
+        setUp(validUser);
         return validUser;
     }
 
@@ -42,7 +42,7 @@ public class DataHelper {
                 faker.internet().password(),
                 "blocked"
         );
-        DataHelper.setUp(validUser);
+        setUp(validUser);
         return validUser;
     }
 
@@ -58,7 +58,7 @@ public class DataHelper {
                 "password",
                 "active"
         );
-        DataHelper.setUp(validUser);
+        setUp(validUser);
         return invalidUser;
     }
 
@@ -74,7 +74,7 @@ public class DataHelper {
                 faker.internet().password(),
                 "active"
         );
-        DataHelper.setUp(validUser);
+        setUp(validUser);
         return invalidUser;
     }
 
